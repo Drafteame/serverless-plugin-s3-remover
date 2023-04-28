@@ -1,0 +1,10 @@
+[tool]
+[tool.commitizen]
+name = "cz_customize"
+version = "0.0.1"
+tag_format = "v$version"
+
+[tool.commitizen.customize]
+schema_pattern = "(break|build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump|deps)(\\(\\S+\\))?!?:(\\s.*)"
+bump_pattern = "^(break|build|feat|fix|refactor|style|test|revert|deps)"
+bump_map = {"break" = "MAJOR", "build" = "MINOR", "feat" = "MINOR", "revert" = "MINOR", "fix" = "PATCH", "refactor" = "PATCH", "style" = "PATCH", "test" = "PATCH", "deps" = "PATCH"}

@@ -1,0 +1,41 @@
+# Serverless directories
+.serverless
+.warmup
+node_modules/
+
+# golang output binary directory
+bin/
+
+# golang vendor (dependencies) directory
+vendor/
+
+# SAM configuration templates
+template.yml
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+tmp/
+
+# Docker volumes
+data/
+
+## IDE folders
+.vscode/
+.idea/
+
+# Specific files
+.DS_Store
+Dockerfile
+id_ed25519
+docker-compose.yaml
+launch.json

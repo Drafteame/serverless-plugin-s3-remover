@@ -1,0 +1,34 @@
+{
+  "name": "serverless-plugin-s3-remover",
+  "version": "0.0.1",
+  "description": "A simple plugin that deletes all files from deployment bucket before deleting the application",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Drafteame/serverless-plugin-s3-remover.git"
+  },
+  "keywords": [
+    "serverless",
+    "plugin",
+    "s3",
+    "aws",
+    "remove"
+  ],
+  "author": "Draftea <infra@draftea.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Drafteame/serverless-plugin-s3-remover/issues"
+  },
+  "homepage": "https://github.com/Drafteame/serverless-plugin-s3-remover#readme",
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "prettier": "2.8.8"
+  },
+  "scripts": {
+    "lint": "npx eslint --fix .",
+    "format": "npx prettier --write .",
+    "pre-commit": "pre-commit install && pre-commit install --hook-type commit-msg"
+  }
+}
