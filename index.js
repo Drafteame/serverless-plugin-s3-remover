@@ -3,9 +3,11 @@
  * empty the S3 deployment buckets associated to the service before removing the stack.
  */
 class S3Remover {
-  constructor(serverless, options) {
+  constructor(serverless, options, { log, progress }) {
     this.serverless = serverless;
     this.options = options;
+    this.log = log;
+    this.progress = progress;
 
     this.provider = this.serverless.getProvider('aws');
 
@@ -21,29 +23,33 @@ class S3Remover {
    * @returns {Promise<void>}
    */
   async remove() {
-    this.serverless.cli.log('S3 Remover: removing bucket contents...');
+    const removeProgress = this.progress.create({
+      message: 'Emptying S3 buckets...',
+    });
 
     let bucketNames;
 
     try {
       bucketNames = await this.#getBuckets();
-      this.serverless.cli.log(`S3 Remover: found bucket ${bucketNames}`);
+      this.#logInfo(`found bucket ${bucketNames}`);
     } catch (e) {
-      this.serverless.cli.log(
-        `S3 Remover: error getting bucket name: ${e.message}`,
-      );
+      this.#logError(`error getting bucket name: ${e.message}`);
       return;
     }
 
     const bucketPromises = [];
 
-    bucketNames.map((name) => bucketPromises.push(this.#emptyBucket(name)));
+    bucketNames.forEach((name) => bucketPromises.push(this.#emptyBucket(name)));
 
-    Promise.all(bucketPromises).catch((e) => {
-      this.serverless.cli.log(
-        `S3 Remover: error emptying bucket: ${e.message}`,
-      );
-    });
+    try {
+      await Promise.all(bucketPromises);
+    } catch (e) {
+      this.#logError(`error emptying bucket: ${e.message}`);
+      removeProgress.remove();
+      return;
+    }
+
+    removeProgress.remove();
   }
 
   /**
@@ -58,11 +64,9 @@ class S3Remover {
 
     try {
       await this.#deleteObjects(bucketName, keys);
-      this.serverless.cli.log(`S3 Remover: bucket ${bucketName} emptied`);
+      this.#logInfo(`bucket ${bucketName} emptied`);
     } catch (e) {
-      this.serverless.cli.log(
-        `S3 Remover: error emptying bucket ${bucketName}: ${e.message}`,
-      );
+      this.#logError(`error emptying bucket ${bucketName}: ${e.message}`);
     }
   }
 
@@ -95,7 +99,7 @@ class S3Remover {
       return keys;
     }
 
-    objects.map((object) => keys.push(object.Key));
+    objects.Contents.forEach((object) => keys.push(object.Key));
 
     if (objects.IsTruncated) {
       return this.#getKeys(name, keys, objects.NextContinuationToken);
@@ -122,14 +126,9 @@ class S3Remover {
 
     let flag = false;
 
-    res.Errors.map((error) => {
+    res.Errors.forEach((error) => {
       flag = true;
-
-      this.serverless.cli.log(
-        `S3 Remover: error deleting object ${error.Key}: ${error.Code}`,
-      );
-
-      return error;
+      this.#logError(`error deleting object ${error.Key}: ${error.Code}`);
     });
 
     if (flag) {
@@ -199,6 +198,14 @@ class S3Remover {
     const { stage } = this.serverless.service.provider;
 
     return `^${service}-${stage}-serverlessdeploymentbucket`;
+  }
+
+  #logError(message) {
+    this.log.error(`S3 Remover: ${message}`);
+  }
+
+  #logInfo(message) {
+    this.log.info(`S3 Remover: ${message}`);
   }
 }
 
