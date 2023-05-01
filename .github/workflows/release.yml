@@ -39,7 +39,7 @@ jobs:
         name: Create bump and changelog
         run: |
           python -m pip install -U commitizen
-          cz bump --changelog --yes
+          cz bump --yes
           export REV=`cz version --project`
           echo "version=\"v$REV\"" >> $GITHUB_OUTPUT
 
