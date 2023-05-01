@@ -2,7 +2,7 @@
  * S3Remover is a serverless plugin that hooks into the 'before:remove:remove' lifecycle event to
  * empty the S3 deployment buckets associated to the service before removing the stack.
  */
-export default class S3Remover {
+class S3Remover {
   constructor(serverless, options) {
     this.serverless = serverless;
     this.options = options;
@@ -201,3 +201,5 @@ export default class S3Remover {
     return `^${service}-${stage}-serverlessdeploymentbucket`;
   }
 }
+
+module.exports = S3Remover;
