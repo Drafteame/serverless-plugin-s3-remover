@@ -9,9 +9,6 @@ env:
   GIT_USER_EMAIL: ${{ secrets.GIT_EMAIL }}
   GIT_USER_NAME: ${{ secrets.GIT_NAME }}
 
-permissions:
-
-
 jobs:
   bump_version:
     if: "!startsWith(github.event.head_commit.message, 'bump:')"
