@@ -9,6 +9,9 @@ env:
   GIT_USER_EMAIL: ${{ secrets.GIT_EMAIL }}
   GIT_USER_NAME: ${{ secrets.GIT_NAME }}
 
+permissions:
+
+
 jobs:
   bump_version:
     if: "!startsWith(github.event.head_commit.message, 'bump:')"
@@ -44,11 +47,12 @@ jobs:
           echo "version=\"v$REV\"" >> $GITHUB_OUTPUT
 
       - name: Push changes
-        uses: Woile/github-push-action@master
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
-          tags: "true"
+          repository: https://github.com/Drafteame/serverless-plugin-s3-remover.git
           branch: "main"
+          directory: .
 
       - name: Print Version
         run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
@@ -102,6 +106,5 @@ jobs:
           gh release create ${{ needs.bump_version.outputs.version }} \
             --title ${{ needs.bump_version.outputs.version }} \
             --target main \
-            --notes-file CHANGELOG.md \
             --verify-tag \
             --latest
