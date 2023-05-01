@@ -1,6 +1,6 @@
 {
   "name": "serverless-plugin-s3-remover",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple plugin that deletes all files from deployment bucket before deleting the application",
   "main": "index.js",
   "repository": {
