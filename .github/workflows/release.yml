@@ -44,12 +44,13 @@ jobs:
           echo "version=\"v$REV\"" >> $GITHUB_OUTPUT
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           repository: "Drafteame/serverless-plugin-s3-remover"
           branch: "main"
           directory: .
+          tags: true
 
       - name: Print Version
         run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
@@ -79,7 +80,6 @@ jobs:
         uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
-          tag: ${{ needs.bump_version.outputs.version }}
           access: public
           strategy: upgrade
 
