@@ -18,14 +18,14 @@ jobs:
       version: ${{ steps.cz.outputs.version }}
     steps:
       - name: Check out
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: "${{ secrets.ACCESS_TOKEN }}"
           ref: "main"
 
       - name: Set up Python
-        uses: actions/setup-python@v4.7.0
+        uses: actions/setup-python@v4.7.1
         with:
           python-version: 3.11
 
@@ -44,7 +44,7 @@ jobs:
           echo "version=\"v$REV\"" >> $GITHUB_OUTPUT
 
       - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           repository: "Drafteame/serverless-plugin-s3-remover"
@@ -62,7 +62,7 @@ jobs:
       - bump_version
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.ACCESS_TOKEN }}
@@ -90,7 +90,7 @@ jobs:
       - bump_version
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.ACCESS_TOKEN }}
