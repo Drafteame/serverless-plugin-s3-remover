@@ -25,7 +25,7 @@ jobs:
           ref: "main"
 
       - name: Set up Python
-        uses: actions/setup-python@v4.7.0
+        uses: actions/setup-python@v4.7.1
         with:
           python-version: 3.11
 
@@ -44,7 +44,7 @@ jobs:
           echo "version=\"v$REV\"" >> $GITHUB_OUTPUT
 
       - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           repository: "Drafteame/serverless-plugin-s3-remover"
@@ -77,7 +77,7 @@ jobs:
         run: npm install
 
       - name: Publish to NPM
-        uses: JS-DevTools/npm-publish@v2
+        uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_ACCESS_TOKEN }}
           access: public
