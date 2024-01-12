@@ -11,7 +11,7 @@ env:
 
 jobs:
   bump_version:
-    if: "!startsWith(github.event.head_commit.message, 'bump:')"
+    if: "!startsWith(github.event.head_commit.message, 'bump') && !startsWith(github.event.head_commit.message, 'ci')"
     runs-on: ubuntu-latest
     name: "Bump version"
     outputs:
@@ -25,7 +25,7 @@ jobs:
           ref: "main"
 
       - name: Set up Python
-        uses: actions/setup-python@v4.7.1
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: 3.11
 
@@ -71,7 +71,7 @@ jobs:
       - name: Set up NodeJS
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
