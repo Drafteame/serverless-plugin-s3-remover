@@ -71,8 +71,8 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
           ref: main
 
-      - name: Set up NodeJS
-        uses: actions/setup-node@v4
+      - name: Setup NodeJS with cache
+        uses: Drafteame/node-cache-action@main
         with:
           node-version: '24'
 
