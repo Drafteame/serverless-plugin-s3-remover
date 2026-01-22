@@ -1,3 +1,10 @@
+## v0.1.8 (2026-01-22)
+
+
+- Merge pull request #31 from Drafteame/chore/gh-token
+- chore: use gh token
+- chore: use gh token
+
 ## v0.1.7 (2026-01-21)
 
 
