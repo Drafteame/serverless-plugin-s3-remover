@@ -13,7 +13,7 @@ jobs:
   bump_version:
     if: "!startsWith(github.event.head_commit.message, 'bump') && !startsWith(github.event.head_commit.message, 'ci')"
     runs-on: ubuntu-latest
-    name: "Bump version"
+    name: 'Bump version'
     outputs:
       version: ${{ steps.cz.outputs.version }}
     steps:
@@ -21,8 +21,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: "${{ secrets.ACCESS_TOKEN }}"
-          ref: "main"
+          token: '${{ secrets.ACCESS_TOKEN }}'
+          ref: 'main'
 
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
@@ -47,8 +47,8 @@ jobs:
         uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
-          repository: "Drafteame/serverless-plugin-s3-remover"
-          branch: "main"
+          repository: 'Drafteame/serverless-plugin-s3-remover'
+          branch: 'main'
           directory: .
           tags: true
 

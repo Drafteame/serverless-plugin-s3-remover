@@ -165,9 +165,9 @@ class S3Remover {
 
     const data = await this.provider.request('S3', 'listBuckets', {});
 
-    const filtered = data.Buckets
-      .map((bucket) => bucket.Name)
-      .filter((name) => new RegExp(regexp).test(name));
+    const filtered = data.Buckets.map((bucket) => bucket.Name).filter((name) =>
+      new RegExp(regexp).test(name),
+    );
 
     if (filtered.length === 0) {
       throw new Error(`No buckets found matching the regexp ${regexp}`);
